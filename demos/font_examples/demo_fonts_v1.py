@@ -28,7 +28,6 @@ def waiting(secs):
 
 
 def demo_fonts():
-    """Test code."""
     # get a reference to cyd_utils
     cyd_utils = get_cyd_utils()
     # get ref to cyd display screen
