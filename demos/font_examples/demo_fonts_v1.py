@@ -20,6 +20,13 @@ from MJB_cyd_utils import get_cyd_utils
 from xglcd_font import XglcdFont
 
 
+def waiting(secs):
+    for i in range(secs, -1, -1):
+        print("\rwaiting for", i, "secs  ", end="")
+        sleep(1)
+    print("\r", " " * 30, end="")
+
+
 def demo_fonts():
     """Test code."""
     # get a reference to cyd_utils
@@ -62,7 +69,7 @@ def demo_fonts():
     cyd_display.draw_text(0, 190, "Unispace 12x24", unispace, ORANGE)
     cyd_display.draw_text(0, 220, "Wendy 7x8", wendy, DEEP_PINK)
 
-    sleep(9)
+    waiting(9)
     cyd_display.clear()
 
     cyd_display.draw_text(0, 255, "Arcade Pix 9x11", arcadepix, RED, landscape=True)
@@ -84,7 +91,7 @@ def demo_fonts():
     cyd_display.draw_text(190, 255, "Unispace 12x24", unispace, ORANGE, landscape=True)
     cyd_display.draw_text(220, 255, "Wendy 7x8", wendy, DEEP_PINK, landscape=True)
 
-    sleep(9)
+    waiting(9)
     cyd_display.clear()
 
     cyd_display.draw_text(
@@ -153,7 +160,8 @@ def demo_fonts():
         background=WHITE,
     )
 
-    sleep(9)
+    waiting(9)
+    print()  # finished
     cyd_display.cleanup()
 
 

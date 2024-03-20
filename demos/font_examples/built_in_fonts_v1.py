@@ -1,7 +1,15 @@
+import sys
 from time import sleep
 
 from MJB_colours import AQUA, BLUE, FUCHSIA, GREEN, RED, WHITE, YELLOW
 from MJB_cyd_utils import get_cyd_utils
+
+
+def waiting(secs):
+    for i in range(secs, -1, -1):
+        print("\rwaiting for", i, "secs  ", end="")
+        sleep(1)
+    print("\r", " " * 30, end="")
 
 
 def run_fonts():
@@ -66,8 +74,11 @@ def run_fonts():
         background=FUCHSIA,
     )
 
-    sleep(15)
+    waiting(15)
+    print()
     cyd_display.cleanup()
 
 
 run_fonts()
+print("end of run")
+sys.exit()
