@@ -2,6 +2,9 @@
 
 Cheap Yellow Display examples using micropython
 
+Many thanks to Brian Lough for getting all the basics prepared:
+https://github.com/witnessmenow/ESP32-Cheap-Yellow-Display
+
 The majority of the examples are modified versions of demos from here:
 https://github.com/rdagger/micropython-ili9341/tree/master
 
