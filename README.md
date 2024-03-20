@@ -1,2 +1,2 @@
 # upy-CYD01
-Cheap Yellow Display examples
+Cheap Yellow Display examples using micropython
