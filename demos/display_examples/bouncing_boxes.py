@@ -1,9 +1,13 @@
-"""ILI9341 demo (bouncing boxes)."""
-# working 17/03/2024
-from machine import Pin, SPI
+import sys
 from random import random, seed
-from ili9341 import Display, color565
-from utime import sleep_us, ticks_cpu, ticks_us, ticks_diff
+
+from MJB_colours import AQUA, BLUE, FUCHSIA, GREEN, RED, YELLOW
+from MJB_cyd_utils import get_cyd_utils
+from utime import sleep_us, ticks_cpu, ticks_diff, ticks_us
+
+# get a reference to cyd_utils
+cyd_utils = get_cyd_utils()
+cyd_display = cyd_utils.cyd_display()
 
 
 class Box(object):
@@ -68,37 +72,20 @@ class Box(object):
         size = self.size
         prev_x = int(self.prev_x)
         prev_y = int(self.prev_y)
-        self.display.fill_hrect(prev_x - size,
-                                prev_y - size,
-                                size, size, 0)
-        self.display.fill_hrect(x - size,
-                                y - size,
-                                size, size, self.color)
+        self.display.fill_hrect(prev_x - size, prev_y - size, size, size, 0)
+        self.display.fill_hrect(x - size, y - size, size, size, self.color)
 
 
-def test():
+def bouncing_box():
     """Bouncing box."""
     try:
-        # Baud rate of 40000000 seems about the max
-        spi = SPI(1, baudrate=40000000, sck=Pin(14), mosi=Pin(13))
-        display = Display(spi, dc=Pin(2), cs=Pin(15), rst=Pin(15))
+        cyd_display.clear()
 
-        # Turn on display backlight
-        backlight = Pin(21, Pin.OUT)
-        backlight.on()
-
-
-        display.clear()
-
-        colors = [color565(255, 0, 0),
-                  color565(0, 255, 0),
-                  color565(0, 0, 255),
-                  color565(255, 255, 0),
-                  color565(0, 255, 255),
-                  color565(255, 0, 255)]
+        colors = [RED, GREEN, BLUE, YELLOW, AQUA, FUCHSIA]
         sizes = [12, 11, 10, 9, 8, 7]
-        boxes = [Box(239, 319, sizes[i], display,
-                 colors[i]) for i in range(6)]
+        boxes = [Box(239, 319, sizes[i], cyd_display, colors[i]) for i in range(6)]
+
+        print("press Ctrl-C to exit...")
 
         while True:
             timer = ticks_us()
@@ -111,7 +98,9 @@ def test():
                 sleep_us(timer_dif)
 
     except KeyboardInterrupt:
-        display.cleanup()
+        cyd_display.cleanup()
+        print("end of run")
+        sys.exit()
 
 
-test()
+bouncing_box()

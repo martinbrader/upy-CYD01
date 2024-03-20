@@ -69,3 +69,6 @@ except KeyboardInterrupt:
     print("\nCtrl-C pressed.  Cleaning up and exiting...")
 finally:
     cyd_display.cleanup()
+
+print("end of run")
+sys.exit()
