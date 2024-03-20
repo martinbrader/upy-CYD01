@@ -2,6 +2,9 @@
 
 Cheap Yellow Display examples using micropython
 
+The majority of the examples are modified versions of demos from here:
+https://github.com/rdagger/micropython-ili9341/tree/master
+
 ## Implementation notes
 
 ### SD card

@@ -7,8 +7,6 @@ from MJB_cyd_utils import get_cyd_utils
 def run_fonts():
     # get a reference to cyd_utils
     cyd_utils = get_cyd_utils()
-    cyd_display = cyd_utils.cyd_display()
-
     # get ref to cyd display screen
     cyd_display = cyd_utils.cyd_display()
 
