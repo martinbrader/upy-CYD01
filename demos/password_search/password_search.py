@@ -3,16 +3,15 @@
 import gc
 import sys
 from hashlib import sha1
+from time import sleep
 
 from MJB_colours import BLUE, GREEN, RED, WHITE
 from MJB_cyd_utils import get_cyd_utils
 from MJB_wifi_manager import WifiManager
+from password_search.touch_keyboard import TouchKeyboard
 from password_search.urequests2 import get
 from ubinascii import hexlify
-from utime import sleep
 from xglcd_font import XglcdFont
-
-from demos.password_search.MJB_touch_keyboard import TouchKeyboard
 
 
 class PwnLookup(object):
@@ -23,14 +22,14 @@ class PwnLookup(object):
         # get ref to cyd display screen
         self.cyd_display = cyd_utils.cyd_display()
 
-        # Set up touchscreen
-        self.xpt = cyd_utils.cyd_touch(self.touchscreen_press)
-
         # Load font
-        self.unispace = XglcdFont("/sd/fonts/Unispace12x24.c", 12, 24)
+        self.unispace = XglcdFont("fonts/Unispace12x24.c", 12, 24)
 
         # Set up Keyboard
         self.keyboard = TouchKeyboard(self.cyd_display, self.unispace)
+
+        # Set up touchscreen
+        self.xpt = cyd_utils.cyd_touch(self.touchscreen_press)
 
     def lookup(self, pwd):
         """Return the number of times password found in pwned database.
@@ -48,7 +47,7 @@ class PwnLookup(object):
         sha1pwd = hexlify(sha1pwd).upper().decode("utf-8")
         head, tail = sha1pwd[:5], sha1pwd[5:]
 
-        if not self.wlan.isconnected():
+        if not self.wlan.is_connected():
             raise IOError("WiFi network error")
 
         hits = 0
@@ -92,28 +91,28 @@ class PwnLookup(object):
 
 
 def password_lookup():
-    # get a reference to cyd_utils
-    cyd_utils = get_cyd_utils(rotation=270)
-    # Set up SD card
-    if not cyd_utils.mountSDcard():
-        print("Abandoned: failed to mount SD card!")
-        sys.exit()
-
-    wm = WifiManager()
-    wm.connect()
     try:
+        print("looking for a wifi connection...")
         print("press Ctrl-C to exit...")
+        wm = WifiManager()
+        wm.connect()
+        while not wm.is_connected():
+            sleep(0.5)
+        # get a reference to cyd_utils
+        cyd_utils = get_cyd_utils(width=320, height=240, rotation=270)
+        # Set up SD card
+        if not cyd_utils.mountSDcard():
+            print("Abandoned: failed to mount SD card!")
+            sys.exit()
+        PwnLookup(wm, cyd_utils)
         while True:
-            if wm.is_connected():
-                PwnLookup(wm, cyd_utils)
-            else:
-                sleep(0.5)
+            sleep(0.1)
     except KeyboardInterrupt:
         print("\nCtrl-C pressed.  Cleaning up and exiting...")
     finally:
         wm.disconnect()
+        print("end of run")
+        sys.exit()
 
 
 password_lookup()
-print("end of run")
-sys.exit()
