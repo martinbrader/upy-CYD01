@@ -26,19 +26,37 @@ In Thonny create a "lib" folder in your CYD and copy in files:
 - xglcd_font.py (font drivers)
 - xpt2046.py (touch screen drivers for CYD)
 
+### SD card set up
+
 My demos assume you have an SD card installed in your CYD.
 Copy the sd folder containing fonts and images onto the SD card.
+
+### Password Search set up
+
+Copy the password_search directory to CYD
+
+### CYD folder structure
+
+Your folder structure should look like this:
+
+![alt text](documentation/thonny_folders.png)
 
 ## Implementation notes
 
 ### Touch screen
 
-This is the SPI for the touch screen:
-touch_spi = SPI(2, baudrate=1000000, sck=Pin(25), mosi=Pin(32), miso=Pin(39))
-to get touch and display working at same time need to use SPI(1, and SPI(2, ...but this causes a conflict with SDcard using slot=2
-Using SoftSPI for touch appears to resolve this problem!
-touch_spi = SoftSPI(baudrate=100000, polarity=1, phase=0, sck=Pin(25), mosi=Pin(32), miso=Pin(39))
-touch = Touch(touch_spi, cs=Pin(33), int_pin=Pin(36), int_handler=callback)
+This is the original SPI for the touch screen:
+
+- touch_spi = SPI(2, baudrate=1000000, sck=Pin(25), mosi=Pin(32), miso=Pin(39))
+
+to get touch and display working at same time you need to use SPI(1, and SPI(2,...
+
+but this causes a conflict with SDcard using slot=2
+
+I found that using SoftSPI for touch appears to resolve this problem!
+
+- touch_spi = SoftSPI(baudrate=100000, polarity=1, phase=0, sck=Pin(25), mosi=Pin(32), miso=Pin(39))
+- touch = Touch(touch_spi, cs=Pin(33), int_pin=Pin(36), int_handler=callback)
 
 ### SD card
 

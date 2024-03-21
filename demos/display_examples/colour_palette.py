@@ -1,8 +1,8 @@
 import sys
-from time import sleep
 
 from MJB_colours import rgb_to_rgb565
 from MJB_cyd_utils import get_cyd_utils
+from utime import sleep
 
 # get a reference to cyd_utils
 cyd_utils = get_cyd_utils()
@@ -60,11 +60,13 @@ def colour_palette():
             color = rgb_to_rgb565(*hsv_to_rgb(c / 192, 1, 1))
             cyd_display.fill_circle(x + 9, y + 9, 9, color)
             c += 1
+    print("displaying colour palette")
     waiting(9)
     print()  # finished
     cyd_display.cleanup()
 
 
+print("creating colour palette")
 colour_palette()
 print("end of run")
 sys.exit()
