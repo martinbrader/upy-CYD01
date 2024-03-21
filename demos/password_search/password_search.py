@@ -92,26 +92,38 @@ class PwnLookup(object):
 
 def password_lookup():
     try:
-        print("looking for a wifi connection...")
-        print("press Ctrl-C to exit...")
+        print("Looking for a wifi connection...")
+        print("Press Ctrl-C to exit...")
         wm = WifiManager()
         wm.connect()
+
+        # Wait until connected to wifi
         while not wm.is_connected():
             sleep(0.5)
-        # get a reference to cyd_utils
+
+        # Get a reference to cyd_utils
         cyd_utils = get_cyd_utils(width=320, height=240, rotation=270)
+
         # Set up SD card
         if not cyd_utils.mountSDcard():
             print("Abandoned: failed to mount SD card!")
             sys.exit()
-        PwnLookup(wm, cyd_utils)
+
+        # Create PwnLookup instance
+        pwn_lookup = PwnLookup(wm, cyd_utils)
+
+        # Main loop
         while True:
             sleep(0.1)
+
     except KeyboardInterrupt:
-        print("\nCtrl-C pressed.  Cleaning up and exiting...")
+        print("\nCtrl-C pressed. Cleaning up and exiting...")
+
     finally:
-        wm.disconnect()
-        print("end of run")
+        # Disconnect from wifi and end the program
+        if wm.is_connected():
+            wm.disconnect()
+        print("End of run")
         sys.exit()
 
 
