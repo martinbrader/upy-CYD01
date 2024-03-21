@@ -2,57 +2,33 @@
 
 import gc
 from hashlib import sha1
-from utime import sleep
 
-
-from touch_keyboard import TouchKeyboard
-from ubinascii import hexlify
-from urequests2 import get
-from xglcd_font import XglcdFont
-from xpt2046 import Touch
 from MJB_wifi_manager import WifiManager
+
+# from touch_keyboard import TouchKeyboard
+from ubinascii import hexlify
+
+# from urequests2 import get
+from utime import sleep
+from xglcd_font import XglcdFont
+
 
 class PwnLookup(object):
     """Checks if password is pwned."""
 
-    def __init__(self, wlan, spi2, dc=2, cs1=15, rst=15, cs2=33, rotation=270):
+    def __init__(self, wlan, rotation=270):
         self.wlan = wlan
         # Set up display
-        self.display = Display(
-            spi1,
-            dc=Pin(dc),
-            cs=Pin(cs1),
-            rst=Pin(rst),
-            width=320,
-            height=240,
-            rotation=rotation,
-        )
-
-        # Turn on display backlight
-        backlight = Pin(21, Pin.OUT)
-        backlight.on()
-
-        self.display.clear()
-
         # Load font
-        self.unispace = XglcdFont("fonts/Unispace12x24.c", 12, 24)
+        # self.unispace = XglcdFont("fonts/Unispace12x24.c", 12, 24)
 
         # Set up Keyboard
-        self.keyboard = TouchKeyboard(self.display, self.unispace)
+        # self.keyboard = TouchKeyboard(self.display, self.unispace)
 
         # Set up touchscreen
-        self.xpt = Touch(
-            spi2, cs=Pin(cs2), int_pin=Pin(36), int_handler=self.touchscreen_press
-        )
-
-        # set up network
-        # self._do_connect()
-        ssid1 = "ssid1"
-        password1 = "password1"
-        ssid2 = "ssid2"
-        password2 = "password2"
-
-        self._connect_to_wifi(ssid1, password1, ssid2, password2)
+        # self.xpt = Touch(
+        #     spi2, cs=Pin(cs2), int_pin=Pin(36), int_handler=self.touchscreen_press
+        # )
 
     def _do_connect(self):
         self.wlan = WLAN(STA_IF)
@@ -158,27 +134,20 @@ class PwnLookup(object):
 
 
 def password_lookup():
-wm = WifiManager()
-wm.connect()
-
-    PwnLookup(spi1, spi2)
-
-    while True:
-        sleep(0.1)
+    wm = WifiManager()
+    wm.connect()
+    try:
+        print("press Ctrl-C to exit...")
+        while True:
+            if wm.is_connected():
+                PwnLookup(wm)
+            else:
+                sleep(0.5)
+    except KeyboardInterrupt:
+        print("\nCtrl-C pressed.  Cleaning up and exiting...")
+    finally:
+        wm.disconnect()
 
 
 password_lookup()
-
-# print("press Ctrl-C to exit...")
-# try:
-#     while True:
-#         if wm.is_connected():
-#             print("Connected!")
-#         else:
-#             print("Disconnected!")
-#         sleep(10)
-# except KeyboardInterrupt:
-#     print("\nCtrl-C pressed.  Cleaning up and exiting...")
-# finally:
-#     wm.disconnect()
 print("end of run")
