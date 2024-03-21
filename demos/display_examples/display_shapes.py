@@ -1,5 +1,4 @@
 import sys
-from time import sleep
 
 from MJB_colours import (
     AQUA,
@@ -15,6 +14,7 @@ from MJB_colours import (
     YELLOW,
 )
 from MJB_cyd_utils import get_cyd_utils
+from utime import sleep
 
 # get a reference to cyd_utils
 cyd_utils = get_cyd_utils()

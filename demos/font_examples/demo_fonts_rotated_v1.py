@@ -1,8 +1,8 @@
 import sys
-from time import sleep
 
 from MJB_colours import BLUE, FUCHSIA, GREEN, RED, YELLOW
 from MJB_cyd_utils import get_cyd_utils
+from utime import sleep
 from xglcd_font import XglcdFont
 
 
