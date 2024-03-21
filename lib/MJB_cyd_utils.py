@@ -1,3 +1,4 @@
+# 21/03/2024 added rotation to initial params, NB defaults to zero
 import os
 
 from ili9341 import Display
@@ -7,9 +8,9 @@ from xpt2046 import Touch
 
 class _CydUtils(object):
 
-    def __init__(self):
+    def __init__(self, rotation=0):
         self._sd_on = False
-        self._init_display()
+        self._init_display(rotation)
         self._init_touchscreen()
         self._init_leds()
         self._init_light_sensor()
@@ -73,14 +74,16 @@ class _CydUtils(object):
             print("failed to mount SD card!")
             return False
 
-    def _init_display(self):
+    def _init_display(self, rotation):
         # Set up SPI for display
         # Baud rate of 40000000 seems about the max
         self._display_spi = SPI(1, baudrate=40000000, sck=Pin(14), mosi=Pin(13))
 
         # Set up display
         # The library needs a reset pin, which does not exist on this board
-        self._display = Display(self._display_spi, dc=Pin(2), cs=Pin(15), rst=Pin(15))
+        self._display = Display(
+            self._display_spi, dc=Pin(2), cs=Pin(15), rst=Pin(15), rotation=rotation
+        )
 
         # Turn on display backlight
         self._backlight = Pin(21, Pin.OUT)
@@ -115,9 +118,9 @@ class _CydUtils(object):
 _cyd_utils = None  # used to check only ever one instance of utils
 
 
-def get_cyd_utils():
+def get_cyd_utils(rotation=0):
     global _cyd_utils
     if _cyd_utils is None:
         # cretae an instance
-        _cyd_utils = _CydUtils()
+        _cyd_utils = _CydUtils(rotation)
     return _cyd_utils

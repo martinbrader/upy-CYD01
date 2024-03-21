@@ -2,23 +2,21 @@
 
 import gc
 from hashlib import sha1
-from time import sleep
+from utime import sleep
 
-from ili9341 import Display, color565
-from machine import SPI, Pin
-from network import STA_IF, WLAN
+
 from touch_keyboard import TouchKeyboard
 from ubinascii import hexlify
 from urequests2 import get
 from xglcd_font import XglcdFont
 from xpt2046 import Touch
-
+from MJB_wifi_manager import WifiManager
 
 class PwnLookup(object):
     """Checks if password is pwned."""
 
-    def __init__(self, spi1, spi2, dc=2, cs1=15, rst=15, cs2=33, rotation=270):
-        """Initialize PwnLookup."""
+    def __init__(self, wlan, spi2, dc=2, cs1=15, rst=15, cs2=33, rotation=270):
+        self.wlan = wlan
         # Set up display
         self.display = Display(
             spi1,
@@ -159,10 +157,9 @@ class PwnLookup(object):
             self.keyboard.locked = False
 
 
-def main():
-    """Start PwnLookup."""
-    spi1 = SPI(1, baudrate=40000000, sck=Pin(14), mosi=Pin(13))
-    spi2 = SPI(2, baudrate=1000000, sck=Pin(25), mosi=Pin(32), miso=Pin(39))
+def password_lookup():
+wm = WifiManager()
+wm.connect()
 
     PwnLookup(spi1, spi2)
 
@@ -170,4 +167,18 @@ def main():
         sleep(0.1)
 
 
-main()
+password_lookup()
+
+# print("press Ctrl-C to exit...")
+# try:
+#     while True:
+#         if wm.is_connected():
+#             print("Connected!")
+#         else:
+#             print("Disconnected!")
+#         sleep(10)
+# except KeyboardInterrupt:
+#     print("\nCtrl-C pressed.  Cleaning up and exiting...")
+# finally:
+#     wm.disconnect()
+print("end of run")
