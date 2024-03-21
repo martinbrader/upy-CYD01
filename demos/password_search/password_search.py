@@ -1,78 +1,36 @@
 """Search online for pwned passwords."""
 
 import gc
+import sys
 from hashlib import sha1
 
+from MJB_colours import BLUE, GREEN, RED, WHITE
+from MJB_cyd_utils import get_cyd_utils
 from MJB_wifi_manager import WifiManager
-
-# from touch_keyboard import TouchKeyboard
+from password_search.urequests2 import get
 from ubinascii import hexlify
-
-# from urequests2 import get
 from utime import sleep
 from xglcd_font import XglcdFont
+
+from demos.password_search.MJB_touch_keyboard import TouchKeyboard
 
 
 class PwnLookup(object):
     """Checks if password is pwned."""
 
-    def __init__(self, wlan, rotation=270):
+    def __init__(self, wlan, cyd_utils):
         self.wlan = wlan
-        # Set up display
-        # Load font
-        # self.unispace = XglcdFont("fonts/Unispace12x24.c", 12, 24)
-
-        # Set up Keyboard
-        # self.keyboard = TouchKeyboard(self.display, self.unispace)
+        # get ref to cyd display screen
+        self.cyd_display = cyd_utils.cyd_display()
 
         # Set up touchscreen
-        # self.xpt = Touch(
-        #     spi2, cs=Pin(cs2), int_pin=Pin(36), int_handler=self.touchscreen_press
-        # )
+        self.xpt = cyd_utils.cyd_touch(self.touchscreen_press)
 
-    def _do_connect(self):
-        self.wlan = WLAN(STA_IF)
-        self.wlan.active(True)
-        self.wlan.scan()
-        if not self.wlan.isconnected():
-            print("connecting to network...")
-            self.wlan.connect("ssid2", "password2")
-            # self.wlan.connect("ssid1", "password1")
-            while not self.wlan.isconnected():
-                pass
-        print("network config:", self.wlan.ifconfig())
+        # Load font
+        self.unispace = XglcdFont("/sd/fonts/Unispace12x24.c", 12, 24)
 
-    # --------------------------------
-    def _connect_to_wifi(self, ssid1, password1, ssid2, password2):
-        self.wlan = WLAN(STA_IF)
-        self.wlan.active(True)
-
-        while not self.wlan.isconnected():
-            print("Connecting to network...")
-            self.wlan.connect(ssid1, password1)
-            for _ in range(10):
-                if self.wlan.isconnected():
-                    break
-                sleep(1)
-            else:
-                print("Failed to connect to " + ssid1 + ", trying " + ssid2 + "...")
-                self.wlan.active(False)
-                sleep(0.5)
-                self.wlan.active(True)
-                self.wlan.connect(ssid2, password2)
-                for _ in range(10):
-                    if self.wlan.isconnected():
-                        break
-                    sleep(1)
-                else:
-                    print(
-                        "Failed to connect to " + ssid2 + " Retrying in 10 seconds..."
-                    )
-                    sleep(10)
-
-        print("Network config:", self.wlan.ifconfig())
-
-        # --------------------------------
+        # Set up Keyboard
+        self.keyboard = TouchKeyboard(self.cyd_display, self.unispace)
 
     def lookup(self, pwd):
         """Return the number of times password found in pwned database.
@@ -111,36 +69,43 @@ class PwnLookup(object):
             self.keyboard.locked = True
             pwd = self.keyboard.kb_text
 
-            self.keyboard.show_message("Searching...", color565(0, 0, 255))
+            self.keyboard.show_message("Searching...", BLUE)
             try:
                 hits = self.lookup(pwd)
 
                 if hits:
                     # Password found
                     msg = "PASSWORD HITS: {0}".format(hits)
-                    self.keyboard.show_message(msg, color565(255, 0, 0))
+                    self.keyboard.show_message(msg, RED)
                 else:
                     # Password not found
                     msg = "PASSWORD NOT FOUND"
-                    self.keyboard.show_message(msg, color565(0, 255, 0))
+                    self.keyboard.show_message(msg, GREEN)
             except Exception as e:
                 if hasattr(e, "message"):
-                    self.keyboard.show_message(e.message[:22], color565(255, 255, 255))
+                    self.keyboard.show_message(e.message[:22], WHITE)
                 else:
-                    self.keyboard.show_message(str(e)[:22], color565(255, 255, 255))
+                    self.keyboard.show_message(str(e)[:22], WHITE)
 
             self.keyboard.waiting = True
             self.keyboard.locked = False
 
 
 def password_lookup():
+    # get a reference to cyd_utils
+    cyd_utils = get_cyd_utils(rotation=270)
+    # Set up SD card
+    if not cyd_utils.mountSDcard():
+        print("Abandoned: failed to mount SD card!")
+        sys.exit()
+
     wm = WifiManager()
     wm.connect()
     try:
         print("press Ctrl-C to exit...")
         while True:
             if wm.is_connected():
-                PwnLookup(wm)
+                PwnLookup(wm, cyd_utils)
             else:
                 sleep(0.5)
     except KeyboardInterrupt:
@@ -151,3 +116,4 @@ def password_lookup():
 
 password_lookup()
 print("end of run")
+sys.exit()
