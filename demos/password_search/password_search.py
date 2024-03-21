@@ -23,7 +23,7 @@ class PwnLookup(object):
         self.cyd_display = cyd_utils.cyd_display()
 
         # Load font
-        self.unispace = XglcdFont("fonts/Unispace12x24.c", 12, 24)
+        self.unispace = XglcdFont("/sd/fonts/Unispace12x24.c", 12, 24)
 
         # Set up Keyboard
         self.keyboard = TouchKeyboard(self.cyd_display, self.unispace)
