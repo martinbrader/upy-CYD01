@@ -41,6 +41,11 @@ Your folder structure should look like this:
 
 ![alt text](documentation/thonny_folders.png)
 
+### Running the demos
+
+I found the easiest way to run the demos was from the "this computer" window on Thonny.
+This avoids the need to download each one onto the CYD.
+
 ## Implementation notes
 
 ### Touch screen
