@@ -1,7 +1,7 @@
 import sys
 
-from MJB_colours import AQUA, BLUE, FUCHSIA, GREEN, RED, WHITE, YELLOW
-from MJB_cyd_utils import get_cyd_utils
+from cyd_colours import AQUA, BLUE, FUCHSIA, GREEN, RED, WHITE, YELLOW
+from cyd_utils import get_cyd_utils
 from utime import sleep
 
 

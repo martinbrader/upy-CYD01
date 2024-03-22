@@ -1,6 +1,6 @@
 """Touch keyboard."""
 
-from MJB_colours import GREEN, YELLOW
+from cyd_colours import GREEN, YELLOW
 
 
 class TouchKeyboard(object):

@@ -1,8 +1,8 @@
 import sys
 
 from machine import idle
-from MJB_colours import CYAN, PURPLE, WHITE
-from MJB_cyd_utils import get_cyd_utils
+from cyd_colours import CYAN, PURPLE, WHITE
+from cyd_utils import get_cyd_utils
 from utime import sleep, sleep_us, ticks_diff, ticks_us
 
 # get a reference to cyd_utils

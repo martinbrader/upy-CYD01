@@ -1,8 +1,8 @@
 import sys
 from random import random, seed
 
-from MJB_colours import AQUA, BLUE, FUCHSIA, GREEN, RED, YELLOW
-from MJB_cyd_utils import get_cyd_utils
+from cyd_colours import AQUA, BLUE, FUCHSIA, GREEN, RED, YELLOW
+from cyd_utils import get_cyd_utils
 from utime import sleep_us, ticks_cpu, ticks_diff, ticks_us
 
 # get a reference to cyd_utils
