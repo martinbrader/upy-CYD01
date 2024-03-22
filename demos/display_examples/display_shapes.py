@@ -1,6 +1,6 @@
 import sys
 
-from MJB_colours import (
+from cyd_colours import (
     AQUA,
     BLUE,
     BLUE_RIBBON,
@@ -13,7 +13,7 @@ from MJB_colours import (
     WHITE,
     YELLOW,
 )
-from MJB_cyd_utils import get_cyd_utils
+from cyd_utils import get_cyd_utils
 from utime import sleep
 
 # get a reference to cyd_utils

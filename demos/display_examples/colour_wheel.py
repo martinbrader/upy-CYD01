@@ -1,8 +1,8 @@
 import sys
 from math import cos, pi, sin
 
-from MJB_colours import rgb_to_rgb565
-from MJB_cyd_utils import get_cyd_utils
+from cyd_colours import rgb_to_rgb565
+from cyd_utils import get_cyd_utils
 from utime import sleep
 
 HALF_WIDTH = const(120)

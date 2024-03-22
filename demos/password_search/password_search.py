@@ -5,10 +5,10 @@ import sys
 from hashlib import sha1
 from time import sleep
 
-from MJB_colours import BLUE, GREEN, RED, WHITE
-from MJB_cyd_utils import get_cyd_utils
-from MJB_wifi_manager import WifiManager
-from password_search.MJB_touch_keyboard import TouchKeyboard
+from cyd_colours import BLUE, GREEN, RED, WHITE
+from cyd_utils import get_cyd_utils
+from cyd_wifi_manager import WifiManager
+from password_search.ps_touch_keyboard import TouchKeyboard
 from password_search.urequests2 import get
 from ubinascii import hexlify
 from xglcd_font import XglcdFont

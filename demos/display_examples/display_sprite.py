@@ -1,6 +1,6 @@
 import sys
 
-from MJB_cyd_utils import get_cyd_utils
+from cyd_utils import get_cyd_utils
 from utime import sleep_us, ticks_diff, ticks_us
 
 # get a reference to cyd_utils

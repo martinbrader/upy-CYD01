@@ -2,12 +2,12 @@ import math
 import os
 import sys
 
-# Simple test to check all functions provided by MJB_cyd_utils are working as expected
+# Simple test to check all functions provided by cyd_utils are working as expected
 # Shows how to use MJB_cyd utils
 # Examples based on:
 # https://github.com/witnessmenow/ESP32-Cheap-Yellow-Display/blob/main/Examples/Micropython/demo.py
-from MJB_colours import BLUE, GREEN, RED, WHITE
-from MJB_cyd_utils import get_cyd_utils
+from cyd_colours import BLUE, GREEN, RED, WHITE
+from cyd_utils import get_cyd_utils
 
 # get a reference to cyd_utils
 cyd_utils = get_cyd_utils()

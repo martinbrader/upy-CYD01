@@ -22,8 +22,8 @@ Here are the options I used:
 In Thonny create a "lib" folder in your CYD and copy in files:
 
 - ili9341.py (the drivers for CYD)
-- MJB_colours.py (my colour definitions)
-- MJB_cyd_utils (my set of CYD utilities)
+- cyd_colours.py (my colour definitions)
+- cyd_utils (my set of CYD utilities)
 - xglcd_font.py (font drivers)
 - xpt2046.py (touch screen drivers for CYD)
 
