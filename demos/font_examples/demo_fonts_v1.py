@@ -3,7 +3,7 @@ import sys
 from cyd_colours import (
     AQUA,
     BLUE,
-    DARKGREEN,
+    DARK_GREEN,
     DEEP_PINK,
     DODGER_BLUE,
     FUCHSIA,
@@ -124,7 +124,7 @@ def demo_fonts():
         "Fixed Font 5x8",
         fixed_font,
         FUCHSIA,
-        background=DARKGREEN,
+        background=DARK_GREEN,
     )
     cyd_display.draw_text(
         0,
