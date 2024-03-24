@@ -37,9 +37,17 @@ Copy the sd folder containing fonts and images onto the SD card.
 I found the easiest way to run the demos was from the "this computer" window on Thonny.  
 This avoids the need to download each one onto the CYD.
 
-### Password Search demo set up
+### Password Search demo
+This demo is used to test passwords.  
+It uses a REST API designed to let people know if their online accounts have been hacked.  
+The code for this demo has been based on the examples here:  
+https://github.com/rdagger/micropython-ili9341/tree/master  
 
-Copy the password_search directory to CYD  
+Here is a link to a complete description of the original project  
+https://www.rototron.info/projects/esp32-pwned-password-checker/
+
+#### Password Search demo set up notes
+Copy the password_search directory to CYD.  
 Create a wifi credentials text file in the root directory called credentials.txt  
 The format for credentials is:  
 ```
