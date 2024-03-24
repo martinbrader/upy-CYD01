@@ -19,11 +19,15 @@ Here are the options I used:
 ![alt text](documentation/thonny_options.png)
 ![alt text](documentation/thonny_options2.png)
 
-In Thonny create a "lib" folder in your CYD and copy in files:
+In Thonny if the "lib" folder doesn't exist use Thonny to copy in the lib directory.  
+If the "lib" folder is already present in your CYD then copy in these files:
 
+- cyd_colours.py (colour definitions)
+- cyd_mqtt.py (mqtt class)
+- cyd_utils.py (set of CYD utilities)
+- cyd_wifi_manager (wifi connection class)
 - ili9341.py (the drivers for CYD)
-- cyd_colours.py (my colour definitions)
-- cyd_utils (my set of CYD utilities)
+- umqttsimple.py (mqtt driver)
 - xglcd_font.py (font drivers)
 - xpt2046.py (touch screen drivers for CYD)
 
@@ -78,7 +82,7 @@ The command (cmd) messages are:
 * "3" to turn on the led Green
 * "4" to turn on the led Blue  
 
-The status request "0" will publish the currecnt state of the Led to topic cyd_topic/status  
+The status request "0" will publish the current state of the Led to topic cyd_topic/status  
 e.g. if the Led is RED it will return the value "2"
 
 ### CYD folder structure
