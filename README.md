@@ -54,6 +54,32 @@ The format for credentials is:
 ssid_1,password1  
 ssid_2,password2
 ```
+### MQTT demo
+### umqttsimple library
+The umqttsimple library code was copied in from here:
+https://raw.githubusercontent.com/RuiSantosdotme/ESP-MicroPython/master/code/MQTT/umqttsimple.py
+
+#### MQTT testing
+I used this public MQTT broker during testing:  
+https://www.hivemq.com/mqtt/public-mqtt-broker/
+
+and this browser based MQTT client to test the demo:  
+https://www.hivemq.com/demos/websocket-client/
+
+#### MQTT demo topics and messages
+The topics are:
+* cyd_topic/cmd
+* cyd_topic/status  
+
+The command (cmd) messages are:
+* "0" to request status information
+* "1" to turn off the Led
+* "2" to turn on the led Red
+* "3" to turn on the led Green
+* "4" to turn on the led Blue  
+
+The status request "0" will publish the currecnt state of the Led to topic cyd_topic/status  
+e.g. if the Led is RED it will return the value "2"
 
 ### CYD folder structure
 
