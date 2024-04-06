@@ -1,4 +1,5 @@
 AQUA = const(0x07FF)  # (0, 255, 255)
+BLACK = const(0x0000)  # (0, 0, 0)
 BLUE = const(0x001F)  # (0, 0, 255)
 BLUE_RIBBON = const(0x21F)  # (0, 64, 255)
 CHARTREUSE = const(0x87E0)  # (128, 255, 0)
